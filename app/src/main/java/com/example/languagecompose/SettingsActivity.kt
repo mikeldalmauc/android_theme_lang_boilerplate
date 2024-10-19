@@ -26,6 +26,7 @@ import androidx.compose.material3.MenuItemColors
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -51,6 +52,23 @@ class SettingsActivity : ComponentActivity() {
 
         setContent {
             val settingsViewModel = SettingsViewModel(LocalContext.current)
+
+            // Observar el idioma seleccionado y recompone la vista usando el launched effect y cambiando la variable lang
+            // Se evita refrescar la actividad completa
+            val selectedLanguage by settingsViewModel.language.observeAsState(settingsViewModel.getSavedLanguage())
+            var lang by remember { mutableStateOf(selectedLanguage) }
+            LaunchedEffect(selectedLanguage) {
+                lang = selectedLanguage
+            }
+
+
+            // Observar el idioma seleccionado y recompone la vista usando el launched effect y cambiando la variable lang
+            // Se evita refrescar la actividad completa
+            val selectedTheme by settingsViewModel.tema.observeAsState(settingsViewModel.getSavedLanguage())
+            var theme by remember { mutableStateOf(selectedTheme) }
+            LaunchedEffect(selectedLanguage) {
+                theme = selectedTheme
+            }
 
             AppTheme (
                 darkTheme = App.getThemePreference(this)
@@ -145,7 +163,7 @@ fun LanguageSettings(viewModel: SettingsViewModel) {
                                 // Aplicar el idioma y recrear la actividad
                                 App.setLocale(context, language)
                                 expanded = false // Cerrar el menú después de seleccionar
-                                (context as? Activity)?.recreate() // Recrear la actividad
+                                //(context as? Activity)?.recreate() // Recrear la actividad
                             }
                         )
                     }
@@ -207,7 +225,7 @@ fun ThemeSettings(viewModel: SettingsViewModel) {
                             App.setThemePreference(context, true)
                             viewModel.setTheme(true)
                             expanded = false // Cerrar el menú después de seleccionar
-                            (context as? Activity)?.recreate() // Recrear la actividad
+                            //(context as? Activity)?.recreate() // Recrear la actividad
                         }
                     )
                     DropdownMenuItem(
@@ -219,7 +237,7 @@ fun ThemeSettings(viewModel: SettingsViewModel) {
                             App.setThemePreference(context, false)
                             viewModel.setTheme(false)
                             expanded = false // Cerrar el menú después de seleccionar
-                            (context as? Activity)?.recreate() // Recrear la actividad
+                            //(context as? Activity)?.recreate() // Recrear la actividad
                         }
                     )
                 }
