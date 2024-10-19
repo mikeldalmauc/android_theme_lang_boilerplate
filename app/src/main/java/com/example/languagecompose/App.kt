@@ -19,6 +19,11 @@ import java.util.Locale
  En este método, llamas a applyLanguage(this) para aplicar el idioma que el usuario haya seleccionado previamente,
  asegurando que la interfaz siempre se muestre en el idioma correcto al iniciar la aplicación.
 
+ Base class for maintaining global application state. You can provide your own implementation by creating a subclass and specifying
+ the fully-qualified name of this subclass as the "android:name" attribute in your AndroidManifest.xml's <application> tag.
+  The Application class, or your subclass of the Application class, is instantiated before any other class when the process
+  for your application/package is created.
+
 */
 class App : Application() {
 
@@ -29,8 +34,9 @@ class App : Application() {
         applyLanguage(this)
     }
 
-    companion object {
 
+    companion object {
+        
         /*
          * applyLanguage(context) es una función que se asegura de aplicar el idioma guardado en las preferencias
          * de la aplicación al contexto que se le pasa. En este caso, se llama desde onCreate() con el contexto global (this).

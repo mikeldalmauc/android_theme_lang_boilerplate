@@ -165,15 +165,15 @@ Esta actividad permite al usuario seleccionar el idioma preferido y persiste su 
 
 Dentro de `SettingsScreen`, se muestran las opciones de idioma y se usa un `LazyColumn` para listar los idiomas disponibles.
 
-- **Recreación de la actividad**: Cuando el usuario selecciona un idioma, se llama a `App.setLocale(context, language)` para aplicar el nuevo idioma.  
+- **Aplicación del idioma**: Cuando el usuario selecciona un idioma, se llama a `App.setLocale(context, language)` para aplicar el nuevo idioma.  
 ```kotlin
     .clickable {
         viewModel.setLanguage(language)
-        // Aplicar el idioma y recrear la actividad
+        // Aplicar el idioma 
         App.setLocale(context, language)
     }
 ```
-- **Observación del idioma**: La UI observa el estado del idioma a través del **ViewModel** y se actualiza automáticamente cuando cambia.
+- **Observación del idioma**: La UI observa el estado del idioma a través del **ViewModel** y se actualiza automáticamente cuando cambia mediante el uso de una corrutina.
 ```kotlin
 // Observar el idioma seleccionado y recompone la vista usando el launched effect y cambiando la variable lang
 // Se evita refrescar la actividad completa
