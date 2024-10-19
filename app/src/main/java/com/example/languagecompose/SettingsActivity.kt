@@ -64,7 +64,7 @@ class SettingsActivity : ComponentActivity() {
 
             // Observar el idioma seleccionado y recompone la vista usando el launched effect y cambiando la variable lang
             // Se evita refrescar la actividad completa
-            val selectedTheme by settingsViewModel.tema.observeAsState(settingsViewModel.getSavedLanguage())
+            val selectedTheme by settingsViewModel.tema.observeAsState(settingsViewModel.getSavedTheme())
             var theme by remember { mutableStateOf(selectedTheme) }
             LaunchedEffect(selectedLanguage) {
                 theme = selectedTheme
